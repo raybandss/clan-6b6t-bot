@@ -8,6 +8,8 @@ A Discord bot designed for 6b6t clans to manage tickets, track delivery staff, d
 - **Delivery Personnel Tracking** - Keep track of who handles deliveries
 - **Staff Status** - Allow staff to update their availability status
 - **Role Management** - Automatic role assignment for completed tickets
+- **Super fun commands** - Tons of games for users to play
+- **Invite System** - Counts users invites
 
 ## 📋 Admin Commands
 
@@ -142,7 +144,7 @@ Edit all the information in the config.json to your liking
 - [X] Welcome channel setup
 - [X] Moderation commands
 - [ ] More ticket based commands
-- [ ] Minecraft based commands
+- [ ] Admin invite adding and removing
 
 ## 🐛 Troubleshooting
 
