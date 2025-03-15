@@ -21,7 +21,6 @@ module.exports = {
     const status = interaction.options.getString('status');
     const user = interaction.user;
     
-    // Update or create status in database
     await UserStatus.findOneAndUpdate(
       { userId: user.id },
       { userId: user.id, status, updatedAt: Date.now() },
@@ -43,7 +42,6 @@ module.exports = {
     
     await interaction.reply({ embeds: [embed] });
     
-    // Log the status change
     sendLog(
       interaction.client,
       'Status Update',
