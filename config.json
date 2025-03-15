@@ -1,13 +1,17 @@
 {
-  "token": "TOKEN",
-  "clientId": "CLIENT_ID",
-  "guildId": "GUILD_ID",
-  "mongoURI": "MONGO_URI",
-  "ticketCategory": "TICKET_CATEGORY",
-  "ticketTranscriptsChannel": "TRANSCRIPTS_ID",
+  "token": "YOUR_TOKEN",
+  "clientId": "YOUR_CLIENT_ID",
+  "guildId": "YOUR_GUILD_ID",
+  "mongoURI": "YOUR_MONGO_URI",
+  "ticketCategory": "YOUR_TICKET_CATEGORY",
+  "ticketTranscriptsChannel": "TICKET_TRANSCRIPTS_ID",
   "logsChannel": "LOGS_ID",
   "reviewsChannel": "REVIEWS_ID",
-  "claimedRole": "CLAIMED_ROLE_ID",
+  "claimedRole": "COMPLETED_ROLE_ID",
+  "staffRole": "STAFF_ID",
+  "reviewEmoji": "⭐",
+  "welcomeChannel": "WELCOME_CHANNEL_ID",
+  "welcomeMessage": "Welcome {user} to RDevelopment! You were invited by {inviter} who now has {inviteCount} invites. Enjoy your stay!",
   "deliveryGuys": [
     "<@ID>", 
     "<@ID>",
@@ -20,5 +24,5 @@
     "warning": "#f39c12",
     "info": "#9b59b6"
   },
-  "embedFooter": "Made by raybandsss | RDevelopment"
+  "embedFooter": "Made by raybandsss | RDEV"
 }
