@@ -9,14 +9,30 @@ A Discord bot designed for 6b6t clans to manage tickets, track delivery staff, d
 - **Staff Status** - Allow staff to update their availability status
 - **Role Management** - Automatic role assignment for completed tickets
 
-## 📋 Commands
+## 📋 Admin Commands
 
 | Command | Description |
 |---------|-------------|
 | `/ticketsetup` | Creates an embed with a button that users can click to open support tickets |
-| `/deliveryguys` | Displays a list of all registered delivery staff |
 | `/status` | Allows admins to set their status as online or offline |
 | `/completed` | Assigns a special role to users (typically for leaving reviews) |
+| `/ban` | Bans the mentioned user permanently or for a certain duration |
+| `/unban` | Unbans the mentioned user |
+| `/kick` | Kicks the mentioned user |
+| `/roleadd` | Assigns a role to the mentioned user |
+
+## 📋 User Commands
+
+| Command | Description |
+|---------|-------------|
+| `/deliveryguys` | Sends all the registered staff |
+| `/emojiriddle` | Creates a fun emoji guessing game |
+| `/invites` | Checks how many invites you or a mentioned user has |
+| `/help` | Displays all commands |
+| `/tictactoe` | Starts a tic tac toe game between you and the mentioned user |
+| `/typerace` | Starts a type race game that users are able to join in on |
+| `/pixelpainter` | Sends a painting that all users are able to paint on |
+| `/meme` | Makes a custom meme with text of your choosing |
 
 ## 🛠️ Installation
 
@@ -28,21 +44,25 @@ cd clan-6b6t-bot
 
 2. Install dependencies
 ```bash
-npm i discord.js fs mongoose path
+npm i discord.js fs mongoose path canvas
 ```
 
 3. Configure your bot information in the `config.json` file
 ```
 {
-  "token": "TOKEN",
-  "clientId": "CLIENT_ID",
-  "guildId": "GUILD_ID",
-  "mongoURI": "MONGO_URI",
-  "ticketCategory": "TICKET_CATEGORY",
-  "ticketTranscriptsChannel": "TRANSCRIPTS_ID",
+  "token": "YOUR_TOKEN",
+  "clientId": "YOUR_CLIENT_ID",
+  "guildId": "YOUR_GUILD_ID",
+  "mongoURI": "YOUR_MONGO_URI",
+  "ticketCategory": "YOUR_TICKET_CATEGORY",
+  "ticketTranscriptsChannel": "TICKET_TRANSCRIPTS_ID",
   "logsChannel": "LOGS_ID",
   "reviewsChannel": "REVIEWS_ID",
-  "claimedRole": "CLAIMED_ROLE_ID",
+  "claimedRole": "COMPLETED_ROLE_ID",
+  "staffRole": "STAFF_ID",
+  "reviewEmoji": "⭐",
+  "welcomeChannel": "WELCOME_CHANNEL_ID",
+  "welcomeMessage": "Welcome {user} to RDevelopment! You were invited by {inviter} who now has {inviteCount} invites. Enjoy your stay!",
   "deliveryGuys": [
     "<@ID>", 
     "<@ID>",
@@ -55,7 +75,7 @@ npm i discord.js fs mongoose path
     "warning": "#f39c12",
     "info": "#9b59b6"
   },
-  "embedFooter": "Made by raybandsss | RDevelopment"
+  "embedFooter": "Made by raybandsss | RDEV"
 }
 ```
 4. Deploy commands
@@ -115,46 +135,14 @@ node index.js
 Edit all the information in the config.json to your liking
 
 
-## 💬 Usage Examples
-
-### Setting Up Tickets
-
-```
-/ticketsetup
-```
-This will make a questionaire pop-up and you will insert all the information, that will create a ticket embed.
-
-### Checking Available Delivery Personnel
-
-```
-/deliveryguys
-```
-Returns a list of all registered delivery personnel and their current availability status. (They will have to update it manually)
-
-### Changing Your Status (Staff Only)
-
-```
-/status online
-```
-or
-```
-/status offline
-```
-Updates your availability status for users to see.
-
-### Marking a Transaction as Completed (Staff Only)
-
-```
-/completed @username
-```
-Gives the mentioned user the role of your choosing, allowing them to leave reviews. (Or whatever you'd like to use it for)
-
 ## 🔄 Planned Features
 
-- [ ] User-friendly commands
-- [ ] Automatic replies
-- [ ] Welcome channel setup
-- [ ] Moderation commands
+- [X] User-friendly commands
+- [X] Automatic review reactions
+- [X] Welcome channel setup
+- [X] Moderation commands
+- [ ] More ticket based commands
+- [ ] Minecraft based commands
 
 ## 🐛 Troubleshooting
 
@@ -162,6 +150,7 @@ Gives the mentioned user the role of your choosing, allowing them to leave revie
 
 **Bot not responding to commands**
 - Ensure you ran `node deploy-commands.js` before starting the bot
+- If it's still not working, run `node diagnose-commands.js` then send the output in the support Discord.
 
 **MongoDB Connection Issues**
 - Check that your MongoDB URI is correct
