@@ -4,7 +4,6 @@ const { Client, Collection, GatewayIntentBits, Partials, Events } = require('dis
 const { connect } = require('mongoose');
 const config = require('./config.json');
 
-// Create a new client instance
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -15,7 +14,6 @@ const client = new Client({
   partials: [Partials.Channel, Partials.Message, Partials.User, Partials.GuildMember]
 });
 
-// Command handling
 client.commands = new Collection();
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
@@ -23,7 +21,7 @@ const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('
 for (const file of commandFiles) {
   const filePath = path.join(commandsPath, file);
   const command = require(filePath);
-  // Set a new item in the Collection with the key as the command name and the value as the exported module
+  
   if ('data' in command && 'execute' in command) {
     client.commands.set(command.data.name, command);
   } else {
@@ -31,7 +29,6 @@ for (const file of commandFiles) {
   }
 }
 
-// Event handling
 const eventsPath = path.join(__dirname, 'events');
 const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
 
@@ -45,7 +42,6 @@ for (const file of eventFiles) {
   }
 }
 
-// Connect to MongoDB
 (async () => {
   try {
     await connect(config.mongoURI);
@@ -55,5 +51,4 @@ for (const file of eventFiles) {
   }
 })();
 
-// Login to Discord
 client.login(config.token);
