@@ -1,22 +1,20 @@
-# 6b6t Discord Bot
+# 6b6t Clan Bot
 
-A powerful Discord bot designed for 6b6t Minecraft clans to manage tickets, track delivery personnel, display staff status, and handle role assignments.
-
-![6b6t Bot Banner](https://via.placeholder.com/800x200)
+A Discord bot designed for 6b6t clans to manage tickets, track delivery staff, display staff status, and handle role assignments.
 
 ## ✨ Features
 
 - **Ticket System** - Create and manage support tickets efficiently
-- **Delivery Personnel Tracking** - Keep track of all delivery personnel
-- **Staff Status** - Allow admins to update their availability status
-- **Role Management** - Automatic role assignment for completed transactions
+- **Delivery Personnel Tracking** - Keep track of who handles deliveries
+- **Staff Status** - Allow staff to update their availability status
+- **Role Management** - Automatic role assignment for completed tickets
 
 ## 📋 Commands
 
 | Command | Description |
 |---------|-------------|
 | `/ticketsetup` | Creates an embed with a button that users can click to open support tickets |
-| `/deliveryguys` | Displays a list of all registered delivery personnel |
+| `/deliveryguys` | Displays a list of all registered delivery staff |
 | `/status` | Allows admins to set their status as online or offline |
 | `/completed` | Assigns a special role to users (typically for leaving reviews) |
 
@@ -24,24 +22,49 @@ A powerful Discord bot designed for 6b6t Minecraft clans to manage tickets, trac
 
 1. Clone this repository
 ```bash
-git clone https://github.com/yourusername/6b6t-discord-bot.git
-cd 6b6t-discord-bot
+git clone https://github.com/raybandss/clan-6b6t-bot.git
+cd clan-6b6t-bot
 ```
 
 2. Install dependencies
 ```bash
-npm install
+npm i discord.js fs mongoose path
 ```
 
-3. Configure your environment variables in a `.env` file
+3. Configure your bot information in the `config.json` file
 ```
-TOKEN=your_discord_bot_token
-MONGODB_URI=your_mongodb_connection_string
+{
+  "token": "TOKEN",
+  "clientId": "CLIENT_ID",
+  "guildId": "GUILD_ID",
+  "mongoURI": "MONGO_URI",
+  "ticketCategory": "TICKET_CATEGORY",
+  "ticketTranscriptsChannel": "TRANSCRIPTS_ID",
+  "logsChannel": "LOGS_ID",
+  "reviewsChannel": "REVIEWS_ID",
+  "claimedRole": "CLAIMED_ROLE_ID",
+  "deliveryGuys": [
+    "<@ID>", 
+    "<@ID>",
+    "<@ID>"
+  ],
+  "colors": {
+    "primary": "#3498db",
+    "success": "#2ecc71",
+    "error": "#e74c3c",
+    "warning": "#f39c12",
+    "info": "#9b59b6"
+  },
+  "embedFooter": "Made by raybandsss | RDevelopment"
+}
 ```
-
-4. Start the bot
+4. Deploy commands
 ```bash
-npm start
+node deploy-commands.js
+```
+5. Start the bot
+```bash
+node index.js
 ```
 
 ## 📊 MongoDB Setup Guide
@@ -85,26 +108,12 @@ npm start
    - Replace `<dbname>` with your preferred database name (e.g., "6b6tBot")
 
 7. **Use the URI in Your Project**
-   - Add the URI to your `.env` file as `MONGODB_URI`
+   - Add the URI to your `config.json` file as `mongoURI`
 
 ## 🔧 Configuration
 
-Create a `config.json` file in the root directory with the following structure:
+Edit all the information in the config.json to your liking
 
-```json
-{
-  "prefix": "!",
-  "adminRoleId": "YOUR_ADMIN_ROLE_ID",
-  "completedRoleId": "YOUR_COMPLETED_ROLE_ID",
-  "ticketCategory": "YOUR_TICKET_CATEGORY_ID",
-  "logChannel": "YOUR_LOG_CHANNEL_ID",
-  "colors": {
-    "success": "#00FF00",
-    "error": "#FF0000",
-    "info": "#0099FF"
-  }
-}
-```
 
 ## 💬 Usage Examples
 
@@ -113,16 +122,16 @@ Create a `config.json` file in the root directory with the following structure:
 ```
 /ticketsetup
 ```
-This will create an embed with a button that users can click to create a new support ticket.
+This will make a questionaire pop-up and you will insert all the information, that will create a ticket embed.
 
 ### Checking Available Delivery Personnel
 
 ```
 /deliveryguys
 ```
-Returns a list of all registered delivery personnel and their current availability status.
+Returns a list of all registered delivery personnel and their current availability status. (They will have to update it manually)
 
-### Changing Your Status (Admin Only)
+### Changing Your Status (Staff Only)
 
 ```
 /status online
@@ -133,29 +142,26 @@ or
 ```
 Updates your availability status for users to see.
 
-### Marking a Transaction as Completed
+### Marking a Transaction as Completed (Staff Only)
 
 ```
 /completed @username
 ```
-Gives the mentioned user the "Completed" role, allowing them to leave reviews.
+Gives the mentioned user the role of your choosing, allowing them to leave reviews. (Or whatever you'd like to use it for)
 
 ## 🔄 Planned Features
 
-- [ ] Integration with Minecraft server for real-time player status
-- [ ] Automatic delivery tracking system
-- [ ] User reputation system
-- [ ] Clan management tools
-- [ ] Economy and transaction management
+- [ ] User-friendly commands
+- [ ] Automatic replies
+- [ ] Welcome channel setup
+- [ ] Moderation commands
 
 ## 🐛 Troubleshooting
 
 ### Common Issues
 
 **Bot not responding to commands**
-- Ensure the bot has proper permissions in your Discord server
-- Check that your `.env` file has the correct TOKEN
-- Verify the bot is online in the Discord Developer Portal
+- Ensure you ran `node deploy-commands.js` before starting the bot
 
 **MongoDB Connection Issues**
 - Check that your MongoDB URI is correct
@@ -168,27 +174,18 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 🤝 Contributing
 
-Contributions, issues, and feature requests are welcome! Feel free to check the issues page.
+Contributions, issues, and feature requests are welcome! You can leave suggestions in our [Discord](https://discord.gg/XUCwtuRn69)
 
-### How to Contribute
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 ## 📚 Resources
 
-- [Discord.js Documentation](https://discord.js.org/)
 - [MongoDB Documentation](https://docs.mongodb.com/)
-- [6b6t Server Website](https://example.com)
 
 ## 📞 Support
 
 Having issues with the bot? Join our support server:
-[Join Discord Server](https://discord.gg/yourdiscordlink)
+[Join Discord](https://discord.gg/XUCwtuRn69)
 
 ---
 
-Made with ❤️ for the 6b6t Minecraft community
+Made with ❤️ by raybandsss 
