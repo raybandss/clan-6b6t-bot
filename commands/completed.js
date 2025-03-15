@@ -14,7 +14,6 @@ module.exports = {
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
   
   async execute(interaction) {
-    // Check if command is used in a ticket channel
     const ticket = await Ticket.findOne({ channelId: interaction.channelId });
     if (!ticket) {
       return interaction.reply({
@@ -26,7 +25,6 @@ module.exports = {
     const targetUser = interaction.options.getUser('user');
     const reviewsChannel = interaction.client.channels.cache.get(config.reviewsChannel);
     
-    // Assign the claimed role
     try {
       const member = await interaction.guild.members.fetch(targetUser.id);
       const claimedRole = interaction.guild.roles.cache.get(config.claimedRole);
@@ -49,7 +47,6 @@ module.exports = {
     
     await interaction.reply({ embeds: [embed] });
     
-    // Log the completion
     sendLog(
       interaction.client,
       'Ticket Completed',
