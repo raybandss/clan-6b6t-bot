@@ -10,12 +10,10 @@ module.exports = {
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
   
   async execute(interaction) {
-    // Show modal to collect information
     const modal = new ModalBuilder()
       .setCustomId('ticket_setup_modal')
       .setTitle('Ticket System Setup');
     
-    // Add components to modal
     const titleInput = new TextInputBuilder()
       .setCustomId('ticketTitle')
       .setLabel('Embed Title')
@@ -37,7 +35,6 @@ module.exports = {
       .setPlaceholder('Create Ticket')
       .setRequired(true);
     
-    // Add inputs to the modal
     const firstRow = new ActionRowBuilder().addComponents(titleInput);
     const secondRow = new ActionRowBuilder().addComponents(descriptionInput);
     const thirdRow = new ActionRowBuilder().addComponents(buttonLabelInput);
