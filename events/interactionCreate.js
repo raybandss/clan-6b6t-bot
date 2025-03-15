@@ -9,7 +9,6 @@ const fs = require('fs');
 module.exports = {
   name: Events.InteractionCreate,
   async execute(interaction) {
-    // Handle slash commands
     if (interaction.isChatInputCommand()) {
       const command = interaction.client.commands.get(interaction.commandName);
       
@@ -29,7 +28,6 @@ module.exports = {
       }
     }
     
-    // Handle modal submissions
     else if (interaction.isModalSubmit()) {
       if (interaction.customId === 'ticket_setup_modal') {
         const title = interaction.fields.getTextInputValue('ticketTitle');
@@ -58,10 +56,8 @@ module.exports = {
         });
         
         try {
-          // Delete any existing document first
           await TicketSetup.deleteOne({ guildId: interaction.guild.id });
           
-          // Create a new document
           const setup = new TicketSetup({
             guildId: interaction.guild.id,
             channelId: interaction.channel.id,
@@ -73,7 +69,6 @@ module.exports = {
           
           await setup.save();
           
-          // Log ticket setup
           sendLog(
             interaction.client,
             'Ticket System Setup',
@@ -90,11 +85,8 @@ module.exports = {
       }
     }
     
-    // Handle button interactions
     else if (interaction.isButton()) {
-      // Create Ticket Button
       if (interaction.customId === 'create_ticket') {
-        // Check if user already has an open ticket
         const existingTicket = await Ticket.findOne({
           guildId: interaction.guild.id,
           userId: interaction.user.id,
@@ -111,10 +103,8 @@ module.exports = {
           }
         }
         
-        // Get next ticket number
         const ticketNumber = await getNextTicketNumber(interaction.guild.id);
         
-        // Create ticket channel
         const ticketChannel = await interaction.guild.channels.create({
           name: `ticket-${ticketNumber}`,
           type: 0, // Text channel
@@ -131,7 +121,6 @@ module.exports = {
           ]
         });
         
-        // Create ticket in database
         const newTicket = new Ticket({
           channelId: ticketChannel.id,
           userId: interaction.user.id,
@@ -141,7 +130,6 @@ module.exports = {
         
         await newTicket.save();
         
-        // Send initial message in ticket channel
         const ticketEmbed = createTicketEmbed(interaction.user);
         const closeButton = createCloseButton();
         
@@ -156,7 +144,6 @@ module.exports = {
           ephemeral: true
         });
         
-        // Log ticket creation
         sendLog(
           interaction.client,
           'Ticket Created',
@@ -165,7 +152,6 @@ module.exports = {
         );
       }
       
-      // Close Ticket Button
       else if (interaction.customId === 'close_ticket') {
         const ticket = await Ticket.findOne({
           channelId: interaction.channel.id,
@@ -179,7 +165,6 @@ module.exports = {
           });
         }
         
-        // Create transcript
         try {
           const transcriptPath = await createTicketTranscript(interaction.channel, ticket.userId);
           const transcriptChannel = interaction.client.channels.cache.get(config.ticketTranscriptsChannel);
@@ -190,14 +175,12 @@ module.exports = {
               files: [transcriptPath]
             });
             
-            // Clean up transcript file
             fs.unlinkSync(transcriptPath);
           }
         } catch (error) {
           console.error('Error creating transcript:', error);
         }
         
-        // Mark ticket as closed
         ticket.closed = true;
         await ticket.save();
         
@@ -205,7 +188,6 @@ module.exports = {
           content: 'This ticket will be closed in 5 seconds...'
         });
         
-        // Log ticket closure
         sendLog(
           interaction.client,
           'Ticket Closed',
